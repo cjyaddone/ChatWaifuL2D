@@ -1,0 +1,42 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "mimixingxiang.moc3",
+		"Textures": [
+			"mimixingxiang.4096/texture_00.png"
+		],
+		"Physics": "mimixingxiang.physics3.json",
+		"Pose": "mimixingxiang.pose3.json",
+		"DisplayInfo": "mimixingxiang.cdi3.json",
+		"Expressions": [
+			{
+				"Name": "black_face",
+				"File": "black_face.exp3.json"
+			},
+			{
+				"Name": "cute_face",
+				"File": "cute_face.exp3.json"
+			},
+			{
+				"Name": "shocked",
+				"File": "shocked.exp3.json"
+			}
+		]
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	],
+	"HitAreas": []
+}

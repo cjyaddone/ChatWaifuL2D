@@ -1,0 +1,11 @@
+{
+	"Type": "Live2D Pose",
+	"Groups": [
+		[
+			{
+				"Id": "zui",
+				"Link": []
+			}
+		]
+	]
+}

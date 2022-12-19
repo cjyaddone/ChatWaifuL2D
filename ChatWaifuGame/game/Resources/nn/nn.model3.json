@@ -1,0 +1,37 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "nn.moc3",
+		"Textures": [
+			"nn.2048/texture_00.png"
+		],
+		"Physics": "nn.physics3.json",
+		"DisplayInfo": "nn.cdi3.json",
+		"Expressions": [
+			{
+				"Name": "cutecry",
+				"File": "cutecry.exp3.json"
+			},
+			{
+				"Name": "embarassing",
+				"File": "embarassing.exp3.json"
+			}
+		]
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	],
+	"HitAreas": []
+}

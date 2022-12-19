@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/script.rpy", line 102: reached end of line when expecting ':'.
+    if renpy.music.is_playing(channel='sound')：
+                                               ^
+
+Ren'Py Version: Ren'Py 8.0.3.22090809
+Mon Dec 19 17:53:36 2022

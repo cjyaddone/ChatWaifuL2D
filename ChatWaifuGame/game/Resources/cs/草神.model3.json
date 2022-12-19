@@ -1,0 +1,71 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "草神.moc3",
+		"Textures": [
+			"草神.8192/texture_00.png"
+		],
+		"Physics": "草神.physics3.json",
+		"DisplayInfo": "草神.cdi3.json",
+		"Expressions": [
+			{
+				"Name": "发光.exp3.json",
+				"File": "发光.exp3.json"
+			},
+			{
+				"Name": "叶子.exp3.json",
+				"File": "叶子.exp3.json"
+			},
+			{
+				"Name": "姿势1.exp3.json",
+				"File": "姿势1.exp3.json"
+			},
+			{
+				"Name": "姿势2.exp3.json",
+				"File": "姿势2.exp3.json"
+			},
+			{
+				"Name": "姿势3.exp3.json",
+				"File": "姿势3.exp3.json"
+			},
+			{
+				"Name": "星星.exp3.json",
+				"File": "星星.exp3.json"
+			},
+			{
+				"Name": "泪.exp3.json",
+				"File": "泪.exp3.json"
+			},
+			{
+				"Name": "生气.exp3.json",
+				"File": "生气.exp3.json"
+			},
+			{
+				"Name": "脸红.exp3.json",
+				"File": "脸红.exp3.json"
+			},
+			{
+				"Name": "黑.exp3.json",
+				"File": "黑.exp3.json"
+			}
+		]
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthOpenY"
+			]
+		}
+	],
+	"HitAreas": []
+}
