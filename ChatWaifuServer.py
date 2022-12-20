@@ -42,7 +42,7 @@ def get_input():
 
 def get_token():
     token = input("Copy your token from ChatGPT and press Enter \n")
-    return token;
+    return token
 
 
 ################################################
@@ -123,8 +123,6 @@ def generateSound(inputString):
     else:
         escape = False
 
-    # model = input('Path of a VITS model: ')
-    # config = input('Path of a config file: ')
     model = r".\model\CN\model.pth"
     config = r".\model\CN\config.json"
 
@@ -200,7 +198,7 @@ def generateSound(inputString):
                     # speaker_id = get_speaker_id('Speaker ID: ')
                     speaker_id = speakerID
                     # out_path = input('Path to save: ')
-                    out_path = "ChatWaifuGame/game/audio/output.wav"
+                    out_path = "./ChatWaifuGameL2D/game/audio/output.wav"
 
                     with no_grad():
                         x_tst = stn_tst.unsqueeze(0)
@@ -268,7 +266,7 @@ def generateSound(inputString):
                         emotion = FloatTensor(emotion)
 
                     # out_path = input('Path to save: ')
-                    out_path = "ChatWaifuGame/game/audio/output.wav"
+                    out_path = "./ChatWaifuGameL2D/game/audio/output.wav"
 
                     with no_grad():
                         x_tst = stn_tst.unsqueeze(0)
@@ -382,10 +380,9 @@ if __name__ == "__main__":
             print(answer)
             generateSound("[ZH]" + answer + "[ZH]")
             client.send(answer.encode())
-            #PlaySound(r'ChatWaifuGame/game/audio/output.wav', flags=1)
             # files                                                                         
-            src = "ChatWaifuGame/game/audio/output.wav"
-            dst = "ChatWaifuGame/game/audio/test.mp3"
+            src = "./ChatWaifuGameL2D/game/audio/output.wav"
+            dst = "./ChatWaifuGameL2D/game/audio/test.mp3"
 
             # convert wav to mp3                                                            
             sound = AudioSegment.from_wav(src)

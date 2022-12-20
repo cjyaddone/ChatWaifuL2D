@@ -1,0 +1,41 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 7, in script
+    image hiyori = Live2D("Resources/hiyori_2", base=.6, loop = True, seamless=True)
+  File "game/script.rpy", line 7, in script
+    image hiyori = Live2D("Resources/hiyori_2", base=.6, loop = True, seamless=True)
+  File "game/script.rpy", line 7, in <module>
+    image hiyori = Live2D("Resources/hiyori_2", base=.6, loop = True, seamless=True)
+Exception: Live2D model Resources/hiyori_2/hiyori_2.model3.json does not exist.
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "D:\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
+    renpy.main.main()
+  File "D:\renpy-8.0.3-sdk\renpy\main.py", line 558, in main
+    renpy.game.context().run(node)
+  File "game/script.rpy", line 7, in script
+    image hiyori = Live2D("Resources/hiyori_2", base=.6, loop = True, seamless=True)
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
+  File "game/script.rpy", line 7, in script
+    image hiyori = Live2D("Resources/hiyori_2", base=.6, loop = True, seamless=True)
+  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 1230, in execute
+    img = renpy.python.py_eval_bytecode(self.code.bytecode)
+  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1085, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/script.rpy", line 7, in <module>
+    image hiyori = Live2D("Resources/hiyori_2", base=.6, loop = True, seamless=True)
+  File "D:\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 555, in __init__
+    common = self.create_common(default_fade)
+  File "D:\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 499, in create_common
+    rv = Live2DCommon(self.filename, default_fade)
+  File "D:\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 186, in __init__
+    raise Exception("Live2D model {} does not exist.".format(filename))
+Exception: Live2D model Resources/hiyori_2/hiyori_2.model3.json does not exist.
+
+Windows-10-10.0.22000 AMD64
+Ren'Py 8.0.3.22090809
+My Question 1.0
+Mon Dec 19 19:54:27 2022
