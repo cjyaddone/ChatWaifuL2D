@@ -91,7 +91,7 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 
 ## <span id="22">5.运行（快和老婆们对话吧:</span>
 
-**在终端输入以下指令
+## 在终端输入以下指令
 **当前支持语言：**
 * [x] 中文版：`python ChatWaifuServer.py`
 * [ ] 日语版
@@ -100,7 +100,7 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 * [ ] 中文语音对话版（使用英文）
 * [ ] 日语语音对话版（使用日文）
 
-##然后在Ren'Py启动器里点击`启动项目`
+## 然后在Ren'Py启动器里点击`启动项目`
 	
 ### <span id="333">5.1 获取ChatGPT Token</span>
 #### 在浏览器登入https://chat.openai.com
