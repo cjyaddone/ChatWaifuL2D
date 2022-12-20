@@ -79,6 +79,15 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 #### 点击返回，点击项目旁边的刷新键，随后会出现一个名为ChatWaifuGameL2D项目，将其打开
 ![](readme/9.png)
 
+## <span id="102">4.下载FFMPEG转换音频格式:</span>
+### 使用浏览器打开：https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z
+### 解压后找到bin的路径，复制
+![](readme/10.png)
+### 使用Windows搜索栏搜索`高级设置`，找到并打开右下角的`环境变量`
+![](readme/11.png)
+### 在`系统变量`里面找到`Path`，双击更改，点击`新建`，把之前复制的路径粘贴进去即可
+![](readme/12.png)
+
 ## <span id="22">4.运行（快和老婆们对话吧:</span>
 
 **当前支持语言：**
