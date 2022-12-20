@@ -32,6 +32,8 @@
 
 ### <span id="cd">1.1 使用cd命令进入项目文件夹</span>
 `cd 你的项目路径`
+
+
 ![](readme/5.png)
 ### <span id="99">1.2 创建Python虚拟环境:</span>
 
@@ -61,17 +63,13 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 
 ## <span id="22">3.运行（快和老婆们对话吧:</span>
 
-* [x]中文版：`python ChatWaifuServer.py`
-
-* [ ]日语版：`python ChatWaifuJP.py`
-
-* [ ]日语语音对话版（使用中文）：`python ChatWaifuJPVoice.py`
-
-* [ ]中文语音对话版（使用中文）：`python ChatWaifuCNVoice.py`
-
-* [ ]中文语音对话版（使用英文）：`python ChatWaifuCNVoiceEN.py`
-
-* [ ]日语语音对话版（使用日文）：`python ChatWaifuJPVoiceJP.py`
+**当前支持语言：**
+* [x] 中文版：`python ChatWaifuServer.py`
+* [ ] 日语版
+* [ ] 日语语音对话版（使用中文）
+* [ ] 中文语音对话版（使用中文）
+* [ ] 中文语音对话版（使用英文）
+* [ ] 日语语音对话版（使用日文）
 
 ### <span id="333">3.1 获取ChatGPT Token</span>
 #### 在浏览器登入https://chat.openai.com
