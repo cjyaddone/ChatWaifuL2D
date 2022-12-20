@@ -93,7 +93,7 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 * [ ] 中文语音对话版（使用英文）
 * [ ] 日语语音对话版（使用日文）
 
-### 然后打开文件浏览器进入此项目的根目录选择`MyQuestion-1.0-pc`，打开MyQuestion.exe
+### 然后打开文件浏览器进入此项目的根目录选择`MyQuestion-1.0-pc`，打开`MyQuestion.exe`
 	
 ### <span id="333">4.1 获取ChatGPT Token</span>
 #### 在浏览器登入https://chat.openai.com
