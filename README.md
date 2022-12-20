@@ -86,11 +86,12 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 ### 下载Ren'Py 8.0.3
 ### 解压后找到exe运行文件并打开，选择中文。打开设置，在一般下面找到项目目录，将其更改为ChatWaifuL2D的根目录
 ![](readme/8.png)
-### 点击返回，点击项目旁边的刷新键，随后会出现一个名为ChatWaifuGameL2D项目，将其打开
+### 点击返回，点击项目旁边的刷新键，随后会出现一个名为ChatWaifuGameL2D项目
 ![](readme/9.png)
 
 ## <span id="22">5.运行（快和老婆们对话吧:</span>
 
+**在终端输入以下指令
 **当前支持语言：**
 * [x] 中文版：`python ChatWaifuServer.py`
 * [ ] 日语版
@@ -99,6 +100,8 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 * [ ] 中文语音对话版（使用英文）
 * [ ] 日语语音对话版（使用日文）
 
+##然后在Ren'Py启动器里点击`启动项目`
+	
 ### <span id="333">5.1 获取ChatGPT Token</span>
 #### 在浏览器登入https://chat.openai.com
 #### 按F12进入开发控制台
