@@ -198,7 +198,7 @@ def generateSound(inputString):
                     # speaker_id = get_speaker_id('Speaker ID: ')
                     speaker_id = speakerID
                     # out_path = input('Path to save: ')
-                    out_path = "./ChatWaifuGameL2D/game/audio/output.wav"
+                    out_path = "./output.wav"
 
                     with no_grad():
                         x_tst = stn_tst.unsqueeze(0)
@@ -266,7 +266,7 @@ def generateSound(inputString):
                         emotion = FloatTensor(emotion)
 
                     # out_path = input('Path to save: ')
-                    out_path = "./ChatWaifuGameL2D/game/audio/output.wav"
+                    out_path = "./output.wav"
 
                     with no_grad():
                         x_tst = stn_tst.unsqueeze(0)
@@ -381,8 +381,8 @@ if __name__ == "__main__":
             generateSound("[ZH]" + answer + "[ZH]")
             client.send(answer.encode())
             # files                                                                         
-            src = "./ChatWaifuGameL2D/game/audio/output.wav"
-            dst = "./ChatWaifuGameL2D/game/audio/test.ogg"
+            src = "./output.wav"
+            dst = "./MyQuestion-1.0-pc/game/audio/test.ogg"
 
             # convert wav to mp3                                                            
             sound = AudioSegment.from_wav(src)
