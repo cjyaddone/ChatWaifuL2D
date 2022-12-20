@@ -10,10 +10,8 @@
 * [x] 回答转语音
 * [x] 多角色语音
 * [x] 语音识别对话 (研发了一款真正人性化的智能语音Q宝
-
-**预计支持功能：**
-* [ ] 对接Live2D的Web版本
-* [ ] 对接Marai机器人
+* [x] 对接Live2D的Web版本
+* [x] 对接Marai机器人
 
 # 目录
 * [1.安装环境：](#1.)
@@ -54,7 +52,7 @@ Python:`.\chatWaifu\Scripts\activate.bat`
 `pip install -r requirement.txt`
 ![](readme/4.png)
 
-## <span id=".model">2.导入模型到根目录model文件夹:</span>
+## <span id=".model">2.下载模型并解压到根目录model文件夹:</span>
 Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/view?usp=sharing
 
 阿里云盘: https://www.aliyundrive.com/s/9JEj1mp1ZRv 提取码: m2y3
@@ -63,17 +61,17 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 
 ## <span id="22">3.运行（快和老婆们对话吧:</span>
 
-日语版：`python ChatWaifuJP.py`
+* [x]中文版：`python ChatWaifuServer.py`
 
-中文版：`python ChatWaifuCN.py`
+* [ ]日语版：`python ChatWaifuJP.py`
 
-日语语音对话版（使用中文）：`python ChatWaifuJPVoice.py`
+* [ ]日语语音对话版（使用中文）：`python ChatWaifuJPVoice.py`
 
-中文语音对话版（使用中文）：`python ChatWaifuCNVoice.py`
+* [ ]中文语音对话版（使用中文）：`python ChatWaifuCNVoice.py`
 
-中文语音对话版（使用英文）：`python ChatWaifuCNVoiceEN.py`
+* [ ]中文语音对话版（使用英文）：`python ChatWaifuCNVoiceEN.py`
 
-日语语音对话版（使用日文）：`python ChatWaifuJPVoiceJP.py`
+* [ ]日语语音对话版（使用日文）：`python ChatWaifuJPVoiceJP.py`
 
 ### <span id="333">3.1 获取ChatGPT Token</span>
 #### 在浏览器登入https://chat.openai.com
@@ -83,7 +81,7 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 
 ### <span id="444">3.2 开始和CyberWaifu聊天！！！</span>
 
-当控制台提示"You:"时开始说话，说完并出现句子录音结束并发送到ChatGPT对话。
+当控制台提示"You:"时开始说话，发送完整句子到游戏内进行对话。
 
 
 ## <span id="915">4.鸣谢：</span>
