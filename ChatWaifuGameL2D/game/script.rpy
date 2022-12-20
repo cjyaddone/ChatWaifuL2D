@@ -1,10 +1,11 @@
 ﻿# 游戏的脚本可置于此文件中。
 
 # 声明此游戏使用的角色。颜色参数可使角色姓名着色。
+
 define e = Character("桃濑日和")
 define config.gl2 = True
 
-image hiyori = Live2D("Resources/hiyori", base=.6, loop = True, fade=True, seamless=True)
+image hiyori = Live2D("Resources/hiyori", base=.6, loop = True, fade=True)
 
 init python:
     import socket
@@ -37,6 +38,7 @@ label start:
         client.send(token.encode())
     
     e "Token已经收到，我们进入下一步吧"
+    
     menu modelChoice:
         e "我们来选择一个角色作为语音输出"
 

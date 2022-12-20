@@ -245,7 +245,7 @@ screen quick_menu():
             textbutton _("回退") action Rollback()
             textbutton _("历史") action ShowMenu('history')
             textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("自动") action Preference("auto-forward", "toggle")
+            textbutton _("自动") action Preference("auto-forward", "enable")
             textbutton _("保存") action ShowMenu('save')
             textbutton _("快存") action QuickSave()
             textbutton _("快读") action QuickLoad()
@@ -709,7 +709,7 @@ screen preferences():
                         style_prefix "radio"
                         label _("显示")
                         textbutton _("窗口") action Preference("display", "window")
-                        textbutton _("") action Preference("display", "fullscreen")
+                        textbutton _("全屏") action Preference("display", "fullscreen")
 
                 vbox:
                     style_prefix "check"
@@ -732,11 +732,16 @@ screen preferences():
                     label _("文字速度")
 
                     bar value Preference("text speed")
-
-                    label _("自动前进时间")
-
+                    
+                    label _("自动播放等待时间")
+                    
                     bar value Preference("auto-forward time")
 
+
+                    label _("等待语音播放完毕")
+                    
+                    textbutton _("开启") action Preference("wait for voice", "toggle")
+                    
                 vbox:
 
                     if config.has_music:
@@ -1397,7 +1402,7 @@ screen quick_menu():
 
             textbutton _("回退") action Rollback()
             textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("自动") action Preference("auto-forward", "toggle")
+            textbutton _("自动") action Preference("auto-forward", "enable")
             textbutton _("菜单") action ShowMenu()
 
 
