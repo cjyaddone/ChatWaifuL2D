@@ -69,7 +69,7 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 #### 点击返回，点击项目旁边的刷新键，随后会出现一个名为ChatWaifuGameL2D项目，将其打开
 ![](readme/9.png)
 
-## <span id="22">3.运行（快和老婆们对话吧:</span>
+## <span id="22">4.运行（快和老婆们对话吧:</span>
 
 **当前支持语言：**
 * [x] 中文版：`python ChatWaifuServer.py`
@@ -79,18 +79,18 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 * [ ] 中文语音对话版（使用英文）
 * [ ] 日语语音对话版（使用日文）
 
-### <span id="333">3.1 获取ChatGPT Token</span>
+### <span id="333">4.1 获取ChatGPT Token</span>
 #### 在浏览器登入https://chat.openai.com
 #### 按F12进入开发控制台
 #### 找到 应用程序 -> cookie -> __Secure-next-auth.session-token
-#### 将值复制进入终端并回车
+#### 将值复制进入游戏终端并回车
 
-### <span id="444">3.2 开始和CyberWaifu聊天！！！</span>
+### <span id="444">4.2 开始和CyberWaifu聊天！！！</span>
 
 当控制台提示"You:"时开始说话，发送完整句子到游戏内进行对话。
 
 
-## <span id="915">4.鸣谢：</span>
+## <span id="915">5.鸣谢：</span>
 - [MoeGoe_GUI]https://github.com/CjangCjengh/MoeGoe_GUI
 - [Pretrained models]https://github.com/CjangCjengh/TTSModels
 - [PyChatGPT]https://github.com/terry3041/pyChatGPT
