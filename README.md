@@ -70,6 +70,7 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 阿里云盘: https://www.aliyundrive.com/s/9JEj1mp1ZRv 提取码: m2y3
 
 ### <span id="cd1">2.1移动到项目根目录下双击导入model</span>
+![](readme/13.png)
 
 ## <span id="102">3.下载FFMPEG转换音频格式:</span>
 ### 使用浏览器打开：https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z
