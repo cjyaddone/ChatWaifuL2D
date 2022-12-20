@@ -61,6 +61,14 @@ Google Drive:https://drive.google.com/file/d/1tMCafhnUoL7FbevVQ44VQi-WznDjt23_/v
 
 ### <span id="cd1">2.1移动到项目根目录下双击导入model</span>
 
+### <span id="101">3.下载Ren'Py
+#### 使用浏览器打开：https://www.renpy.org/
+#### 下载Ren'Py 8.0.3
+#### 解压后找到exe运行文件并打开，选择中文。打开设置，在一般下面找到项目目录，将其更改为ChatWaifuL2D的根目录
+![](readme/8.png)
+#### 点击返回，点击项目旁边的刷新键，随后会出现一个名为ChatWaifuGameL2D项目，将其打开
+![](readme/9.png)
+
 ## <span id="22">3.运行（快和老婆们对话吧:</span>
 
 **当前支持语言：**
