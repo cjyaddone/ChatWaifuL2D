@@ -382,8 +382,8 @@ if __name__ == "__main__":
             client.send(answer.encode())
             # files                                                                         
             src = "./ChatWaifuGameL2D/game/audio/output.wav"
-            dst = "./ChatWaifuGameL2D/game/audio/test.mp3"
+            dst = "./ChatWaifuGameL2D/game/audio/test.ogg"
 
             # convert wav to mp3                                                            
             sound = AudioSegment.from_wav(src)
-            sound.export(dst, format="mp3")
+            sound.export(dst, format="ogg")

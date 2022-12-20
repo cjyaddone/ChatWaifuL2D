@@ -99,18 +99,9 @@ label checkRes:
 
 label answer:
     show hiyori talking
-    #$ duration = renpy.music.get_duration(channel='sound')
-    #play sound "/audio/test.mp3"
-    #$ renpy.pause(delay=(duration + 1), hard=True)
-    
-    $ lines = ["/audio/test.mp3"]
-    while lines: # 只要lines列表不为空，表达式结果等效于True
-        play sound lines.pop(0) # 移除lines列表第一个元素
-        e "[response]"
-        $ duration = renpy.music.get_duration(channel='sound')
-        $ time.sleep(duration)
-        #$ renpy.pause(delay=duration, hard=True) 
-    #e "[response]"
+    voice "/audio/test.ogg"
+    e "[response]"
+    voice sustain
 
     jump talk
     
