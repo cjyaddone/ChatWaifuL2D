@@ -1,14 +1,14 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 105, in script
+  File "game/script.rpy", line 109, in script
     e "[response]"
 SystemError: <class 'Exception'> returned a result with an error set
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 105, in script
+  File "game/script.rpy", line 109, in script
     e "[response]"
   File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 921, in execute
     renpy.exports.say(who, what, *args, **kwargs)
@@ -41,4 +41,4 @@ SystemError: <class 'Exception'> returned a result with an error set
 Windows-10-10.0.22000 AMD64
 Ren'Py 8.0.3.22090809
 My Question 1.0
-Mon Dec 19 21:25:40 2022
+Mon Dec 19 22:37:23 2022

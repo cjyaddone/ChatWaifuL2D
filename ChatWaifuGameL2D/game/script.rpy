@@ -108,7 +108,8 @@ label answer:
         play sound lines.pop(0) # 移除lines列表第一个元素
         e "[response]"
         $ duration = renpy.music.get_duration(channel='sound')
-        $ renpy.pause(delay=duration, hard=True) 
+        $ time.sleep(duration)
+        #$ renpy.pause(delay=duration, hard=True) 
     #e "[response]"
 
     jump talk
