@@ -24,10 +24,10 @@
 * [x] 对接Marai机器人
 
 # 运行方法
-* 1. 下载并解压最新的Release
-* 2. 将ChatWaifuL2D文件夹中的“ffmpeg-n4.4-latest-win64-gpl-4.4”文件夹拖入C盘根目录
-* 3. 运行ChatWaifuL2D中的ChatWaifuServer.exe
-* 4. 运行ChatWaifuL2D/Game下的 ChatWaifu.exe
+#### 下载并解压最新的Release
+#### 将ChatWaifuL2D文件夹中的“ffmpeg-n4.4-latest-win64-gpl-4.4”文件夹拖入C盘根目录
+#### 运行ChatWaifuL2D中的ChatWaifuServer.exe
+#### 运行ChatWaifuL2D/Game下的 ChatWaifu.exe
 
 # 如何获取Token
 #### 在浏览器登入https://chat.openai.com
