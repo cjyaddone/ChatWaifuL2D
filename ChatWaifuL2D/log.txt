@@ -1,4 +1,4 @@
-Tue Dec 20 00:44:50 2022
+Tue Dec 20 22:46:58 2022
 Windows-10-10.0.22000
 Ren'Py 8.0.3.22090809
  
@@ -7,12 +7,12 @@ Bootstrap to the start of init.init took 0.03s
 Early init took 0.00s
 Loader init took 0.01s
 Loading error handling took 0.02s
-Loading script took 0.07s
+Loading script took 0.06s
 Loading save slot metadata. took 0.01s
 Loading persistent took 0.00s
-Faled to initialize steam: FileNotFoundError("Could not find module 'D:\\ChatWaifuL2D\\MyQuestion-1.0-pc\\lib\\py3-windows-x86_64\\steam_api64.dll' (or one of its dependencies). Try using the full path with constructor syntax.")
+Faled to initialize steam: FileNotFoundError("Could not find module 'D:\\ChatWaifuL2D\\ChatWaifuL2D\\lib\\py3-windows-x86_64\\steam_api64.dll' (or one of its dependencies). Try using the full path with constructor syntax.")
 Set script version to: (8, 0, 3)
-Running init code took 0.03s
+Running init code took 0.06s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
 Index archives took 0.00s
@@ -27,7 +27,7 @@ Creating interface object took 0.18s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
-Load screen analysis took 0.01s
+Load screen analysis took 0.02s
 Analyze screens took 0.00s
 Save screen analysis took 0.00s
 Prepare screens took 0.03s

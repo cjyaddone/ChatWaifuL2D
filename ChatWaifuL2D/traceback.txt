@@ -12,18 +12,18 @@ ConnectionRefusedError: [WinError 10061] No connection could be made because the
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "D:\ChatWaifuL2D\MyQuestion-1.0-pc\renpy\bootstrap.py", line 277, in bootstrap
+  File "D:\ChatWaifuL2D\ChatWaifuL2D\renpy\bootstrap.py", line 277, in bootstrap
     renpy.main.main()
-  File "D:\ChatWaifuL2D\MyQuestion-1.0-pc\renpy\main.py", line 558, in main
+  File "D:\ChatWaifuL2D\ChatWaifuL2D\renpy\main.py", line 558, in main
     renpy.game.context().run(node)
   File "game/script.rpy", line 10, in script
     init python:
   File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
   File "game/script.rpy", line 10, in script
     init python:
-  File "D:\ChatWaifuL2D\MyQuestion-1.0-pc\renpy\ast.py", line 1131, in execute
+  File "D:\ChatWaifuL2D\ChatWaifuL2D\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\ChatWaifuL2D\MyQuestion-1.0-pc\renpy\python.py", line 1061, in py_exec_bytecode
+  File "D:\ChatWaifuL2D\ChatWaifuL2D\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
   File "game/script.rpy", line 15, in <module>
     client.connect(ip_port)
@@ -32,4 +32,4 @@ ConnectionRefusedError: [WinError 10061] No connection could be made because the
 Windows-10-10.0.22000 AMD64
 Ren'Py 8.0.3.22090809
 My Question 1.0
-Tue Dec 20 00:41:46 2022
+Tue Dec 20 22:46:34 2022
