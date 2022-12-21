@@ -25,6 +25,7 @@
 
 # 运行方法
 #### 确保已安装Chrome浏览器
+#### 如果您在国内，可能需要使用vpn
 #### 下载并解压最新的Release
 #### 将ChatWaifuL2D文件夹中的“ffmpeg-n4.4-latest-win64-gpl-4.4”文件夹拖入C盘根目录
 #### 运行ChatWaifuL2D中的ChatWaifuServer.exe
