@@ -34,7 +34,7 @@
 #### 按F12进入开发控制台
 #### 找到 应用程序 -> cookie -> __Secure-next-auth.session-token
 ![](readme/token.png)
-#### 将值复制进入终端并回车
+#### 将值复制进入游戏并回车
 
 ## <span id="915">6.鸣谢：</span>
 - [MoeGoe_GUI]https://github.com/CjangCjengh/MoeGoe_GUI
