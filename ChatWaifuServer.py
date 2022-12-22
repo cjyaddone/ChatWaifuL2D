@@ -147,6 +147,7 @@ if __name__ == "__main__":
     if(session_token):
         print("收到token:"+ session_token)
         api = ChatGPT(session_token)
+        client.send("chrome loaded".encode())
         voiceLanguage = int(client.recv(1024).decode())
         if(voiceLanguage == 0):
             print("设置中文为输出语言")
