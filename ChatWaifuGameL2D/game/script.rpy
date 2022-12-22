@@ -10,7 +10,6 @@ image hiyori = Live2D("Resources/hiyori", base=.6, loop = True, fade=True)
 init python:
     import socket
     import time
-    total_data = bytes()
     renpy.block_rollback()
     ip_port = ('127.0.0.1', 9000)
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
@@ -38,29 +37,7 @@ label start:
     python:
         token = renpy.input("让我们开始吧，请输入ChatGPT的Token")
         client.send(token.encode())
-
-
-label waitForTokenConformation:
-    $ renpy.block_rollback()
-    e "Token已发送，正在等待浏览器加载..."
-    show hiyori m03
-    python:
-        client.setblocking(0)
-        try:
-                data = client.recv(1024)
-        except:
-                data = bytes()
-                client.setblocking(1)
     
-    if(len(data) > 0):
-        $ response = data.decode()
-        jump language
-    else:
-        $ renpy.block_rollback()
-        e "Token已发送，正在等待浏览器加载......"
-        jump waitForTokenConformation
-
-label language:
     e "Token已经收到，我们进入下一步吧"
 
     menu languageChoice:
@@ -165,16 +142,14 @@ label checkRes:
         client.setblocking(0)
         try:
                 data = client.recv(1024)
-                
         except:
                 data = bytes()
                 client.setblocking(1)
-    $ total_data += data
-    if(len(data) < 1024 and len(data) >0):
-        $ response = total_data.decode()
+    
+    if(len(data) > 0):
+        $ response = data.decode()
         jump answer
     else:
-        $ renpy.block_rollback()
         e "......"
         jump checkRes
 
@@ -185,9 +160,6 @@ label answer:
     show hiyori talking
     voice "/audio/test.ogg"
     e "[response]"
-    python:
-        data = bytes()
-        total_data = bytes()
     voice sustain
     
     jump talk
