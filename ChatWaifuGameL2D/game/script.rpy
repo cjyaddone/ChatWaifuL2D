@@ -40,8 +40,46 @@ label start:
     
     e "Token已经收到，我们进入下一步吧"
 
-    menu languageChoice:
-        e "请选择一种输出语言"
+    menu inputMethod: #input 1
+        e "请选择输入方式"
+
+        "键盘输入":
+            python:
+                client.send(("0").encode())
+                keyboard = True
+            jump outputMethod
+        "语音输入":
+            python:
+                client.send(("1").encode())
+                keyboard = False
+            jump voiceInputMethod
+    
+    return
+
+
+label voiceInputMethod:
+    menu inputLanguageChoice: #input 2
+        e "请选择输入语言"
+
+        "中文":
+            #block of code to run
+            python:
+                client.send(("0").encode())
+            jump outputMethod
+        "日本語":
+            #block of code to run
+            python:
+                client.send(("1").encode())
+            jump outputMethod
+        "英语":
+            python:
+                client.send(("2").encode())
+            jump outputMethod
+
+
+label outputMethod:
+    menu languageChoice: #input 3
+        e "请选择输出语言"
 
         "中文":
             #block of code to run
@@ -54,76 +92,62 @@ label start:
                 client.send(("1").encode())
             jump modelChoiceJP
 
-    return    
         
 label modelChoiceCN:
-    menu CNmodelChoice:
+    menu CNmodelChoice: #input 4
         e "我们来选择一个角色作为语音输出"
 
         "綾地寧々":
-            #block of code to run
             python:
                 client.send(("0").encode())
-            jump talk
         "在原七海":
-            #block of code to run
             python:
                 client.send(("1").encode())
-            jump talk
         "小茸":
-            #block of code to run
             python:
                 client.send(("2").encode())
-            jump talk
         "唐乐吟":
-            #block of code to run
             python:
                 client.send(("3").encode())
-            jump talk
+    
+    if keyboard:
+        jump talk_keyboard
+    else:
+        jump talk_voice
     
 
 label modelChoiceJP:
-    menu JPmodelChoice:
+    menu JPmodelChoice: #input 4
         e "我们来选择一个角色作为语音输出"
 
         "綾地寧々":
-            #block of code to run
             python:
                 client.send(("0").encode())
-            jump talk
         "因幡めぐる":
-            #block of code to run
             python:
                 client.send(("1").encode())
-            jump talk
         "朝武芳乃":
-            #block of code to run
             python:
                 client.send(("2").encode())
-            jump talk
         "常陸茉子":
-            #block of code to run
             python:
                 client.send(("3").encode())
-            jump talk
         "ムラサメ":
-            #block of code to run
             python:
                 client.send(("4").encode())
-            jump talk
         "鞍馬小春":
-            #block of code to run
             python:
                 client.send(("5").encode())
-            jump talk
         "在原七海":
-            #block of code to run
             python:
                 client.send(("6").encode())
-            jump talk
-   
+
+    if keyboard:
+        jump talk_keyboard
+    else:
+        jump talk_voice
     
-label talk:
+label talk_keyboard:
     $ renpy.block_rollback()
     show hiyori m02
     python:
@@ -131,6 +155,26 @@ label talk:
         client.send(message.encode())
         data = bytes()
     jump checkRes
+
+
+label talk_voice:
+    $ renpy.block_rollback()
+    show hiyori m02
+    e "你："
+    python:
+        client.setblocking(0)
+        try:
+                finishInput = client.recv(1024)
+        except:
+                finishInput = bytes()
+                client.setblocking(1)
+
+    if(len(finishInput) > 0):
+        $ finishInput = finishInput.decode()
+        e "[finishInput]"
+        jump checkRes
+    
+    jump talk_voice
 
 
 label checkRes:
@@ -162,4 +206,9 @@ label answer:
     e "[response]"
     voice sustain
     
-    jump talk
+    if keyboard:
+        $ client.send("语音播放完毕".encode())
+        jump talk_keyboard
+    else:
+        $ client.send("语音播放完毕".encode())
+        jump talk_voice
