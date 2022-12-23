@@ -269,6 +269,7 @@ if __name__ == "__main__":
             question = question + " 使用中文回答"
         resp = api.send_message(question)
         answer = resp["message"].replace('\n', '')
+        answerG = answer
         print("ChatGPT:")
         print(answer)
         if(outputMethod == 0):
