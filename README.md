@@ -27,7 +27,7 @@
 #### 确保已安装Chrome浏览器
 #### 如果您在国内，可能需要使用vpn
 #### 下载并解压最新的Release
-#### 将ChatWaifuL2D文件夹中的“ffmpeg-n4.4-latest-win64-gpl-4.4/bin”添加进环境变量。可参考https://jingyan.baidu.com/article/b907e627b5b4b707e7891cc1.html
+#### 将ChatWaifuL2D文件夹中的“ffmpeg-n4.4-latest-win64-gpl-4.4/bin”移动到C盘根目录，并运行添加环境变量.bat
 #### 运行ChatWaifuL2D中的ChatWaifuServer.exe
 #### 运行ChatWaifuL2D/Game下的 ChatWaifu.exe
 
