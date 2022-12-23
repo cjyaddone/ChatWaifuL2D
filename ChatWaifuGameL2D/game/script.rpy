@@ -3,6 +3,7 @@
 # 声明此游戏使用的角色。颜色参数可使角色姓名着色。
 
 define e = Character("Hiyori")
+define y = Character("你")
 define config.gl2 = True
 
 image hiyori = Live2D("Resources/hiyori", base=.6, loop = True, fade=True)
@@ -10,6 +11,8 @@ image hiyori = Live2D("Resources/hiyori", base=.6, loop = True, fade=True)
 init python:
     import socket
     import time
+    thinking = 0
+    total_data = bytes()
     renpy.block_rollback()
     ip_port = ('127.0.0.1', 9000)
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
@@ -38,9 +41,39 @@ label start:
         token = renpy.input("让我们开始吧，请输入ChatGPT的Token")
         client.send(token.encode())
     
-    e "Token已经收到，我们进入下一步吧"
 
-    menu inputMethod: #input 1
+    jump checkToken
+    return
+    
+
+label checkToken:
+    $ renpy.block_rollback()
+    e "Token已发送，正在等待浏览器加载..."
+    if (thinking == 0):
+        show hiyori m03
+
+    python:
+        client.setblocking(0)
+        try:
+                data = client.recv(1024)
+        except:
+                data = bytes()
+                client.setblocking(1)
+    
+    if(len(data) > 0):
+        e "Token已经收到，我们进入下一步吧"
+        $ thinking = 0
+        jump inputMethod
+    else:
+        e "Token已发送，正在等待浏览器加载......"
+        $ thinking == 1
+        jump checkToken
+
+
+label inputMethod:
+    $ renpy.block_rollback()
+    show hiyori m01
+    menu inputMethod1: #input 1
         e "请选择输入方式"
 
         "键盘输入":
@@ -54,10 +87,11 @@ label start:
                 keyboard = False
             jump voiceInputMethod
     
-    return
+    
 
 
 label voiceInputMethod:
+    $ renpy.block_rollback()
     menu inputLanguageChoice: #input 2
         e "请选择输入语言"
 
@@ -78,6 +112,7 @@ label voiceInputMethod:
 
 
 label outputMethod:
+    $ renpy.block_rollback()
     menu languageChoice: #input 3
         e "请选择输出语言"
 
@@ -94,6 +129,7 @@ label outputMethod:
 
         
 label modelChoiceCN:
+    $ renpy.block_rollback()
     menu CNmodelChoice: #input 4
         e "我们来选择一个角色作为语音输出"
 
@@ -117,6 +153,7 @@ label modelChoiceCN:
     
 
 label modelChoiceJP:
+    $ renpy.block_rollback()
     menu JPmodelChoice: #input 4
         e "我们来选择一个角色作为语音输出"
 
@@ -159,8 +196,9 @@ label talk_keyboard:
 
 label talk_voice:
     $ renpy.block_rollback()
-    show hiyori m02
-    e "你："
+    if(thinking == 0):
+        show hiyori m02
+    y "你："
     python:
         client.setblocking(0)
         try:
@@ -171,30 +209,39 @@ label talk_voice:
 
     if(len(finishInput) > 0):
         $ finishInput = finishInput.decode()
-        e "[finishInput]"
+        $ renpy.block_rollback()
+        y "[finishInput]"
+        $ thinking = 0
         jump checkRes
-    
+    $ thinking = 1
     jump talk_voice
 
 
 label checkRes:
     $ renpy.block_rollback()
+    if(thinking == 0):
+        show hiyori m03
     e "..."
-    show hiyori m03
 
     python:
         client.setblocking(0)
         try:
                 data = client.recv(1024)
+                total_data += data
         except:
                 data = bytes()
                 client.setblocking(1)
     
-    if(len(data) > 0):
-        $ response = data.decode()
+    if(len(data) > 0 and len(data) < 1024):
+        python:
+            response = total_data.decode()
+            total_data = bytes()
+            thinking = 0
         jump answer
     else:
+        $ renpy.block_rollback()
         e "......"
+        $ thinking = 1
         jump checkRes
 
         
@@ -203,6 +250,7 @@ label checkRes:
 label answer:
     show hiyori talking
     voice "/audio/test.ogg"
+    $ renpy.block_rollback()
     e "[response]"
     voice sustain
     

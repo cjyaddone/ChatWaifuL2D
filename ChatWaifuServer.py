@@ -1,6 +1,5 @@
 from scipy.io.wavfile import write
-from mel_processing import spectrogram_torch
-from text import text_to_sequence, _clean_text
+from text import text_to_sequence
 from models import SynthesizerTrn
 import utils
 import commons
@@ -9,7 +8,6 @@ import re
 from pydub import AudioSegment
 from torch import no_grad, LongTensor
 import logging
-from winsound import PlaySound
 import argparse
 import queue
 import sounddevice as sd
@@ -20,6 +18,7 @@ chinese_model_path = ".\model\CN\model.pth"
 chinese_config_path = ".\model\CN\config.json"
 japanese_model_path = ".\model\H_excluded.pth"
 japanese_config_path = ".\model\config.json"
+inputVoice = -1
 
 #########################################
 #Voice Recognition
@@ -81,28 +80,8 @@ except KeyboardInterrupt:
     print("\nDone")
     parser.exit(0)
 
-def voice_input_cnjp():
-    model = Model(lang="cn")
-    print("You:")
-    with sd.RawInputStream(samplerate=args.samplerate, blocksize=8000, device=args.device,
-                           dtype="int16", channels=1, callback=callback):
-
-        rec = KaldiRecognizer(model, args.samplerate)
-        while True:
-            data = q.get()
-            if rec.AcceptWaveform(data):
-                a = json.loads(rec.Result())
-                a = str(a['text'])
-                a = ''.join(a.split())
-                if(len(a) > 0):
-                    print(a)
-                    user_input = a + " 使用日本语"
-                    return user_input
-            if dump_fn is not None:
-                dump_fn.write(data)
-
-def voice_input_cncn():
-    model = Model(lang="cn")
+def voice_input(language):
+    model = Model(lang=language)
     print("You:")
     with sd.RawInputStream(samplerate=args.samplerate, blocksize=8000, device=args.device,
                            dtype="int16", channels=1, callback=callback):
@@ -120,87 +99,6 @@ def voice_input_cncn():
                     return user_input
             if dump_fn is not None:
                 dump_fn.write(data)
-
-def voice_input_jpjp():
-    model = Model(lang="ja")
-    print("You:")
-    with sd.RawInputStream(samplerate=args.samplerate, blocksize=8000, device=args.device,
-                           dtype="int16", channels=1, callback=callback):
-
-        rec = KaldiRecognizer(model, args.samplerate)
-        while True:
-            data = q.get()
-            if rec.AcceptWaveform(data):
-                a = json.loads(rec.Result())
-                a = str(a['text'])
-                a = ''.join(a.split())
-                if(len(a) > 0):
-                    print(a)
-                    user_input = a + " 使用日本语"
-                    return user_input
-            if dump_fn is not None:
-                dump_fn.write(data)
-
-def voice_input_jpcn():
-    model = Model(lang="ja")
-    print("You:")
-    with sd.RawInputStream(samplerate=args.samplerate, blocksize=8000, device=args.device,
-                           dtype="int16", channels=1, callback=callback):
-
-        rec = KaldiRecognizer(model, args.samplerate)
-        while True:
-            data = q.get()
-            if rec.AcceptWaveform(data):
-                a = json.loads(rec.Result())
-                a = str(a['text'])
-                a = ''.join(a.split())
-                if(len(a) > 0):
-                    print(a)
-                    user_input = a
-                    return user_input
-            if dump_fn is not None:
-                dump_fn.write(data)
-
-def voice_input_enjp():
-    model = Model(lang="en-us")
-    print("You:")
-    with sd.RawInputStream(samplerate=args.samplerate, blocksize=8000, device=args.device,
-                           dtype="int16", channels=1, callback=callback):
-
-        rec = KaldiRecognizer(model, args.samplerate)
-        while True:
-            data = q.get()
-            if rec.AcceptWaveform(data):
-                a = json.loads(rec.Result())
-                a = str(a['text'])
-                a = ''.join(a.split())
-                if(len(a) > 0):
-                    print(a)
-                    user_input = a + " 使用日本语"
-                    return user_input
-            if dump_fn is not None:
-                dump_fn.write(data)
-
-def voice_input_encn():
-    model = Model(lang="en-us")
-    print("You:")
-    with sd.RawInputStream(samplerate=args.samplerate, blocksize=8000, device=args.device,
-                           dtype="int16", channels=1, callback=callback):
-
-        rec = KaldiRecognizer(model, args.samplerate)
-        while True:
-            data = q.get()
-            if rec.AcceptWaveform(data):
-                a = json.loads(rec.Result())
-                a = str(a['text'])
-                a = ''.join(a.split())
-                if(len(a) > 0):
-                    print(a)
-                    user_input = a
-                    return user_input
-            if dump_fn is not None:
-                dump_fn.write(data)
-
 
 ######Socket######
 import socket
@@ -227,33 +125,6 @@ def get_text(text, hps, cleaned=False):
     text_norm = LongTensor(text_norm)
     return text_norm
 
-def get_speaker_id(message):
-    speaker_id = input(message)
-    try:
-        speaker_id = int(speaker_id)
-    except:
-        print(str(speaker_id) + ' is not a valid ID!')
-        sys.exit(1)
-    return speaker_id
-
-def get_model_id(message):
-    speaker_id = input(message)
-    try:
-        speaker_id = int(speaker_id)
-    except:
-        print(str(speaker_id) + ' is not a valid ID!')
-        sys.exit(1)
-    return speaker_id
-
-def get_language_id(message):
-    speaker_id = input(message)
-    try:
-        speaker_id = int(speaker_id)
-    except:
-        print(str(speaker_id) + ' is not a valid ID!')
-        sys.exit(1)
-    return speaker_id
-
 def get_label_value(text, label, default, warning_name='value'):
     value = re.search(rf'\[{label}=(.+?)\]', text)
     if value:
@@ -276,10 +147,6 @@ def get_label(text, label):
 
 
 def generateSound(inputString, id, model_id):
-    if '--escape' in sys.argv:
-        escape = True
-    else:
-        escape = False
 
     if model_id == 0:
         model = chinese_model_path
@@ -354,55 +221,30 @@ if __name__ == "__main__":
     if(session_token):
         print("收到token:"+ session_token)
         api = ChatGPT(session_token)
-
+        client.send("已加载".encode())
         inputMethod = int(client.recv(1024).decode()) #inputMethod: Keyboard/Voice
         if(inputMethod == 0): #Keyboard
             print("设置为键盘输入")
-            outputMethod = int(client.recv(1024).decode()) #outputMethod: CN/JP
-            if(outputMethod == 0): #CN
-                print("设置为中文输出")
-                speakerID = int(client.recv(1024).decode()) #modelChoiceCN: who?(4 total)
-                print("语音输出编号：" + str(speakerID))
-            elif(outputMethod == 1): #JP
-                print("设置为日语输出")
-                speakerID = int(client.recv(1024).decode()) #modelChoiceJP: who?(7 total)
-                print("语音输出编号：" + str(speakerID))
-        elif(inputMethod == 1): #Voice
+        elif(inputMethod == 1): #voice
             print("设置为语音输入")
-            inputVoice = int(client.recv(1024).decode()) #voiceInputMethod: CN/JP/EN
-            if(inputVoice == 0): #CN
-                print("设置为中文输入")
-                outputMethod = int(client.recv(1024).decode()) #outputMethod: CN/JP
-                if(outputMethod == 0):
-                    print("设置为中文输出")
-                    speakerID = int(client.recv(1024).decode()) #modelChoiceCN: who?(4 total)
-                    print("语音输出编号：" + str(speakerID))
-                elif(outputMethod == 1):
-                    print("设置为日语输出")
-                    speakerID = int(client.recv(1024).decode()) #modelChoiceJP: who?(7 total)
-                    print("语音输出编号：" + str(speakerID))
-            elif(inputVoice == 1): #JP
-                print("设置为日语输入")
-                outputMethod = int(client.recv(1024).decode()) #outputMethod: CN/JP
-                if(outputMethod == 0):
-                    print("设置为中文输出")
-                    speakerID = int(client.recv(1024).decode()) #modelChoiceCN: who?(4 total)
-                    print("语音输出编号：" + str(speakerID))
-                elif(outputMethod == 1):
-                    print("设置为日语输出")
-                    speakerID = int(client.recv(1024).decode()) #modelChoiceJP: who?(7 total)
-                    print("语音输出编号：" + str(speakerID))
-            elif(inputVoice == 2): #EN
-                print("设置为英语输入")
-                outputMethod = int(client.recv(1024).decode()) #outputMethod: CN/JP
-                if(outputMethod == 0):
-                    print("设置为中文输出")
-                    speakerID = int(client.recv(1024).decode()) #modelChoiceCN: who?(4 total)
-                    print("语音输出编号：" + str(speakerID))
-                elif(outputMethod == 1):
-                    print("设置为日语输出")
-                    speakerID = int(client.recv(1024).decode()) #modelChoiceJP: who?(7 total)
-                    print("语音输出编号：" + str(speakerID))     
+            inputVoice = int(client.recv(1024).decode())  # voiceInputMethod: CN/JP/EN
+            if(inputVoice == 0):
+                voiceModel = "cn"
+                print("设置中文为识别语言")
+            elif(inputVoice == 1):
+                voiceModel = "ja"
+                print("设置日本语为识别语言")
+            elif(inputVoice == 2):
+                voiceModel = "en-us"
+                print("设置英语为识别语言")
+
+        outputMethod = int(client.recv(1024).decode()) #outputMethod: CN/JP
+        if(outputMethod == 0):
+            print("设置为中文输出")
+        elif(outputMethod == 1):
+            print("设置为日语输出")
+
+        speaker = int(client.recv(1024).decode())  # outputMethod: CN/JP
 
 
     while True:
@@ -414,85 +256,25 @@ if __name__ == "__main__":
                 if len(data) < 1024:
                     break
             question = total_data.decode()
-            print("Question Received: "+ question)
 
-            if(outputMethod == 1):
-                question = question + " 使用日本语"
-
-            if(len(question) > 0):
-                resp = api.send_message(question)
-                answer = resp["message"].replace('\n', '')
-                if(resp == "quit()"):
-                    break
-                print("ChatGPT:")
-                print(answer)
-                if (outputMethod == 0):
-                    response= "[ZH]" + str(answer) + "[ZH]"
-                elif(outputMethod == 1):
-                    response = str(answer)
-                generateSound(response, int(speakerID), int(outputMethod))
         elif(inputMethod == 1): #Voice
-            if(inputVoice == 0 and outputMethod == 0): #CN voice input, CN output
-                temp = voice_input_cncn()
-                client.send(temp.encode())
-                resp = api.send_message(temp)
-                if(resp == "quit()"):
-                    break
-                answer = resp["message"].replace('\n','')
-                print("ChatGPT:")
-                print(answer)
-                generateSound("[ZH]"+answer+"[ZH]", int(speakerID), int(outputMethod))
-            elif(inputVoice == 0 and outputMethod == 1): #CN voice input, JP output
-                temp = voice_input_cnjp()
-                client.send(temp.encode())
-                resp = api.send_message(temp)
-                if(resp == "quit()"):
-                    break
-                answer = resp["message"].replace('\n','')
-                print("ChatGPT:")
-                print(answer)
-                generateSound(answer, int(speakerID), int(outputMethod))
-            elif(inputVoice == 1 and outputMethod == 0): #JP voice input, CN output
-                temp = voice_input_jpcn()
-                client.send(temp.encode())
-                resp = api.send_message(temp)
-                if(resp == "quit()"):
-                    break
-                answer = resp["message"].replace('\n','')
-                print("ChatGPT:")
-                print(answer)
-                generateSound("[ZH]"+answer+"[ZH]", int(speakerID), int(outputMethod))
-            elif(inputVoice == 1 and outputMethod == 1): #JP voice input, JP output
-                temp = voice_input_jpjp()
-                client.send(temp.encode())
-                resp = api.send_message(temp)
-                if(resp == "quit()"):
-                    break
-                answer = resp["message"].replace('\n','')
-                print("ChatGPT:")
-                print(answer)
-                generateSound(answer, int(speakerID), int(outputMethod))
-            elif(inputVoice == 2 and outputMethod == 0): #EN voice input, CN output
-                temp = voice_input_encn()
-                client.send(temp.encode())
-                resp = api.send_message(temp)
-                if(resp == "quit()"):
-                    break
-                answer = resp["message"].replace('\n','')
-                print("ChatGPT:")
-                print(answer)
-                generateSound("[ZH]"+answer+"[ZH]", int(speakerID), int(outputMethod))
-            elif(inputVoice == 2 and outputMethod == 1): #EN voice input, JP output
-                temp = voice_input_enjp()
-                client.send(temp.encode())
-                resp = api.send_message(temp)
-                if(resp == "quit()"):
-                    break
-                answer = resp["message"].replace('\n','')
-                print("ChatGPT:")
-                print(answer)
-                generateSound(answer, int(speakerID), int(outputMethod))
-            
+            question = voice_input(voiceModel)
+            client.send(question.encode())
+
+        print("Question Received: " + question)
+
+        if(outputMethod == 1 and (inputVoice == 0 or inputVoice == 2 or inputVoice == -1)):
+            question = question + " 使用日本语回答"
+        if (outputMethod == 0 and (inputVoice == 1 or inputVoice == 2 or inputVoice == -1)):
+            question = question + " 使用中文回答"
+        resp = api.send_message(question)
+        answer = resp["message"].replace('\n', '')
+        print("ChatGPT:")
+        print(answer)
+        if(outputMethod == 0):
+            answerG = "[ZH]" + answer + "[ZH]"
+        generateSound(answerG,speaker,outputMethod)
+
         # convert wav to ogg
         src = "./output.wav"
         dst = "./ChatWaifuGameL2D/game/audio/test.ogg"

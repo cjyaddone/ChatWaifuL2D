@@ -1,26 +1,35 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 163, in script
-    python:
-  File "game/script.rpy", line 164, in <module>
-    finishInput = client.recv(1024)
-BlockingIOError: [WinError 10035] A non-blocking socket operation could not be completed immediately
+  File "game/script.rpy", line 11, in script
+    init python:
+  File "game/script.rpy", line 11, in script
+    init python:
+  File "game/script.rpy", line 19, in <module>
+    client.connect(ip_port)
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 163, in script
-    python:
-  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
+  File "D:\Project\Renpy\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
+    renpy.main.main()
+  File "D:\Project\Renpy\renpy-8.0.3-sdk\renpy\main.py", line 558, in main
+    renpy.game.context().run(node)
+  File "game/script.rpy", line 11, in script
+    init python:
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
+  File "game/script.rpy", line 11, in script
+    init python:
+  File "D:\Project\Renpy\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+  File "D:\Project\Renpy\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 164, in <module>
-    finishInput = client.recv(1024)
-BlockingIOError: [WinError 10035] A non-blocking socket operation could not be completed immediately
+  File "game/script.rpy", line 19, in <module>
+    client.connect(ip_port)
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
 
-Windows-10-10.0.22000 AMD64
+Windows-10-10.0.19041 AMD64
 Ren'Py 8.0.3.22090809
 My Question 1.0
-Thu Dec 22 21:30:59 2022
+Thu Dec 22 21:17:35 2022
