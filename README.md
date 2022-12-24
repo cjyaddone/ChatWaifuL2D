@@ -1,4 +1,4 @@
-![cover](readme/cyberchat.png)
+![cover](readme/chatwaifu.png)
 
 [中文](README.md "中文") [English](eng-README.md "English") [日本語](jp-README.md "日本語")
 
