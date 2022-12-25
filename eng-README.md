@@ -24,9 +24,10 @@ Effect demonstration on BiliBIli:[《青春猪头少年不会梦见赛博女友�
 * [x] [Connect to Marai Robort](https://github.com/MuBai-He/ChatWaifu-marai)
 
 # 运行方法
-#### Make sure that you are using chrome explorer
+#### Make sure that you are using chrome explorer and have the newest version108 installed
+#### If you are in China Mainland or Russ
 #### donload and decompress the newest Release
-#### copy “ffmpeg-n4.4-latest-win64-gpl-4.4” to C:\\
+#### run the exe file to install the program, we recommand you to install in a folder outside C:\\
 #### Run ChatWaifuServer.exe
 #### Run ChatWaifu.exe under ChatWaifuL2D/Game
 
