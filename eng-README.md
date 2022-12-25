@@ -25,7 +25,7 @@ Effect demonstration on BiliBIli:[《青春猪头少年不会梦见赛博女友�
 
 # 运行方法
 #### Make sure that you are using chrome explorer and have the newest version108 installed
-#### If you are in China Mainland or Russ
+#### If you are in China Mainland or Russia, a VPN connection is required
 #### donload and decompress the newest Release
 #### run the exe file to install the program, we recommand you to install in a folder outside C:\\
 #### Run ChatWaifuServer.exe
