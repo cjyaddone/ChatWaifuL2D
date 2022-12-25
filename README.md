@@ -13,7 +13,7 @@
 
 > ### 这是一个基于TTS+VITS的ChatGPT语音对话程序!
 
-效果演示BiliBIli:[ChatGPT+Galgame 与老婆对话！](【ChatGPT+Galgame 与老婆自由对话！-哔哩哔哩】 https://b23.tv/yw48MVs "BiliBili")
+效果演示BiliBIli:[ChatGPT+Galgame 与老婆对话！](https://b23.tv/yw48MVs "BiliBili")
 
 **当前支持功能：**
 * [x] ChatGPT的对话聊天
