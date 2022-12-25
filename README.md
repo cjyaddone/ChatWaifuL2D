@@ -24,10 +24,10 @@
 * [x] [对接Marai机器人](https://github.com/MuBai-He/ChatWaifu-marai)
 
 # 运行方法
-#### 确保已安装Chrome浏览器
-#### 如果您在国内，可能需要使用vpn
+#### 确保已安装Chrome浏览器，并升级到最新的108版本
+#### 如果您在国内，需要使用vpn
 #### 下载并解压最新的Release
-#### 将ChatWaifuL2D文件夹中的“ffmpeg-n4.4-latest-win64-gpl-4.4/bin”移动到C盘根目录，并运行添加环境变量.bat
+#### 运行ChatWaifuL2D.exe安装程序，建议安装在C盘外的目录
 #### 运行ChatWaifuL2D中的ChatWaifuServer.exe
 #### 运行ChatWaifuL2D/Game下的 ChatWaifu.exe
 
