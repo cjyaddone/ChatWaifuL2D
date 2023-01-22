@@ -15,7 +15,7 @@
 
 Effect demonstration on BiliBIli:[《青春猪头少年不会梦见赛博女友》](https://www.bilibili.com/video/BV1rv4y1Q7eT "BiliBili")
 
-**当前支持功能：**
+**Supported Aspects:**
 * [x] Talking with ChatGPT
 * [x] Convert AI's Response to wav file
 * [x] Multi-Character voice generator
@@ -23,7 +23,7 @@ Effect demonstration on BiliBIli:[《青春猪头少年不会梦见赛博女友�
 * [x] L2D Enabled UI
 * [x] [Connect to Marai Robort](https://github.com/MuBai-He/ChatWaifu-marai)
 
-# 运行方法
+# Usage
 #### Make sure that you are using chrome explorer and have the newest version108 installed
 #### If you are in China Mainland or Russia, a VPN connection is required
 #### donload and decompress the newest Release
@@ -38,7 +38,7 @@ Effect demonstration on BiliBIli:[《青春猪头少年不会梦见赛博女友�
 ![](readme/token.png)
 #### Copy the value into game and press ENTER
 
-## <span id="915">6.鸣谢：</span>
+## <span id="915">6.Special Thanks：</span>
 - [MoeGoe_GUI]https://github.com/CjangCjengh/MoeGoe_GUI
 - [Pretrained models]https://github.com/CjangCjengh/TTSModels
 - [PyChatGPT]https://github.com/terry3041/pyChatGPT
