@@ -22,6 +22,7 @@
 * [x] 语音识别对话 (研发了一款真正人性化的智能语音Q宝
 * [x] 对接Live2D的Web版本
 * [x] [对接Marai机器人](https://github.com/MuBai-He/ChatWaifu-marai)
+* [x] [使用gpt3官方api，并支持cuda加速的版本（当前仅源码](https://github.com/cjyaddone/ChatWaifu-API)
 
 # 运行方法
 #### 确保已安装Chrome浏览器，并升级到最新的108版本
