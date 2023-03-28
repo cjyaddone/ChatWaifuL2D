@@ -7,25 +7,27 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.utils import consume_prefix_in_state_dict_if_present
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 class Hubert(nn.Module):
     def __init__(self, num_label_embeddings: int = 100, mask: bool = True):
         super().__init__()
         self._mask = mask
-        self.feature_extractor = FeatureExtractor()
-        self.feature_projection = FeatureProjection()
-        self.positional_embedding = PositionalConvEmbedding()
-        self.norm = nn.LayerNorm(768)
-        self.dropout = nn.Dropout(0.1)
+        self.feature_extractor = FeatureExtractor().to(device)
+        self.feature_projection = FeatureProjection().to(device)
+        self.positional_embedding = PositionalConvEmbedding().to(device)
+        self.norm = nn.LayerNorm(768).to(device)
+        self.dropout = nn.Dropout(0.1).to(device)
         self.encoder = TransformerEncoder(
             nn.TransformerEncoderLayer(
                 768, 12, 3072, activation="gelu", batch_first=True
             ),
             12,
-        )
-        self.proj = nn.Linear(768, 256)
+        ).to(device)
+        self.proj = nn.Linear(768, 256).to(device)
 
-        self.masked_spec_embed = nn.Parameter(torch.FloatTensor(768).uniform_())
-        self.label_embedding = nn.Embedding(num_label_embeddings, 256)
+        self.masked_spec_embed = nn.Parameter(torch.cuda.FloatTensor(768).uniform_().to(device))
+        self.label_embedding = nn.Embedding(num_label_embeddings, 256).to(device)
 
     def mask(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         mask = None
@@ -37,7 +39,7 @@ class Hubert(nn.Module):
     def encode(
         self, x: torch.Tensor, layer: Optional[int] = None
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        x = self.feature_extractor(x)
+        x = self.feature_extractor(x.to(device))
         x = self.feature_projection(x.transpose(1, 2))
         x, mask = self.mask(x)
         x = x + self.positional_embedding(x)
@@ -54,7 +56,7 @@ class Hubert(nn.Module):
         return logits / 0.1
 
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        x, mask = self.encode(x)
+        x, mask = self.encode(x.to(device))
         x = self.proj(x)
         logits = self.logits(x)
         return logits, mask
@@ -64,27 +66,28 @@ class HubertSoft(Hubert):
     def __init__(self):
         super().__init__()
 
-    @torch.inference_mode()
+    @torch.jit.script
+    @torch.jit.unused
     def units(self, wav: torch.Tensor) -> torch.Tensor:
         wav = F.pad(wav, ((400 - 320) // 2, (400 - 320) // 2))
-        x, _ = self.encode(wav)
+        x, _ = self.encode(wav.to(device))
         return self.proj(x)
 
 
 class FeatureExtractor(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv0 = nn.Conv1d(1, 512, 10, 5, bias=False)
-        self.norm0 = nn.GroupNorm(512, 512)
-        self.conv1 = nn.Conv1d(512, 512, 3, 2, bias=False)
-        self.conv2 = nn.Conv1d(512, 512, 3, 2, bias=False)
-        self.conv3 = nn.Conv1d(512, 512, 3, 2, bias=False)
-        self.conv4 = nn.Conv1d(512, 512, 3, 2, bias=False)
-        self.conv5 = nn.Conv1d(512, 512, 2, 2, bias=False)
-        self.conv6 = nn.Conv1d(512, 512, 2, 2, bias=False)
+        self.conv0 = nn.Conv1d(1, 512, 10, 5, bias=False).to(device)
+        self.norm0 = nn.GroupNorm(512, 512).to(device)
+        self.conv1 = nn.Conv1d(512, 512, 3, 2, bias=False).to(device)
+        self.conv2 = nn.Conv1d(512, 512, 3, 2, bias=False).to(device)
+        self.conv3 = nn.Conv1d(512, 512, 3, 2, bias=False).to(device)
+        self.conv4 = nn.Conv1d(512, 512, 3, 2, bias=False).to(device)
+        self.conv5 = nn.Conv1d(512, 512, 2, 2, bias=False).to(device)
+        self.conv6 = nn.Conv1d(512, 512, 2, 2, bias=False).to(device)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = F.gelu(self.norm0(self.conv0(x)))
+        x = F.gelu(self.norm0(self.conv0(x.to(device))))
         x = F.gelu(self.conv1(x))
         x = F.gelu(self.conv2(x))
         x = F.gelu(self.conv3(x))
@@ -97,12 +100,12 @@ class FeatureExtractor(nn.Module):
 class FeatureProjection(nn.Module):
     def __init__(self):
         super().__init__()
-        self.norm = nn.LayerNorm(512)
-        self.projection = nn.Linear(512, 768)
-        self.dropout = nn.Dropout(0.1)
+        self.norm = nn.LayerNorm(512).to(device)
+        self.projection = nn.Linear(512, 768).to(device)
+        self.dropout = nn.Dropout(0.1).to(device)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.norm(x)
+        x = self.norm(x.to(device))
         x = self.projection(x)
         x = self.dropout(x)
         return x
@@ -118,7 +121,7 @@ class PositionalConvEmbedding(nn.Module):
             padding=128 // 2,
             groups=16,
         )
-        self.conv = nn.utils.weight_norm(self.conv, name="weight", dim=2)
+        self.conv = nn.utils.weight_norm(self.conv.to(device), name="weight", dim=2)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.conv(x.transpose(1, 2))
@@ -143,10 +146,14 @@ class TransformerEncoder(nn.Module):
         src_key_padding_mask: torch.Tensor = None,
         output_layer: Optional[int] = None,
     ) -> torch.Tensor:
-        output = src
+        output = src.to(device)
+        if mask is not None:
+            mask = mask.to(device)
+        if src_key_padding_mask is not None:
+            src_key_padding_mask = src_key_padding_mask.to(device)
         for layer in self.layers[:output_layer]:
             output = layer(
-                output, src_mask=mask, src_key_padding_mask=src_key_padding_mask
+                output.to(device), src_mask=mask, src_key_padding_mask=src_key_padding_mask
             )
         return output
 
@@ -203,19 +210,18 @@ def _compute_mask(
     # scatter indices to mask
     mask = mask.scatter(1, mask_idxs, True)
 
-    return mask
+    return mask.to(torch.bool)
 
 
-def hubert_soft(
-    path: str
-) -> HubertSoft:
+def hubert_soft(path: str) -> HubertSoft:
     r"""HuBERT-Soft from `"A Comparison of Discrete and Soft Speech Units for Improved Voice Conversion"`.
     Args:
         path (str): path of a pretrained model
     """
     hubert = HubertSoft()
-    checkpoint = torch.load(path)
+    checkpoint = torch.load(path, map_location=device)
     consume_prefix_in_state_dict_if_present(checkpoint, "module.")
     hubert.load_state_dict(checkpoint)
+    hubert.to(device)
     hubert.eval()
     return hubert

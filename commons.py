@@ -2,6 +2,7 @@ import torch
 from torch.nn import functional as F
 import torch.jit
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def script_method(fn, _rcb=None):
   return fn

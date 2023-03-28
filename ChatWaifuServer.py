@@ -13,12 +13,15 @@ import queue
 import sounddevice as sd
 from vosk import Model, KaldiRecognizer
 import json
+import threading
+import time
 
 chinese_model_path = ".\model\CN\model.pth"
 chinese_config_path = ".\model\CN\config.json"
 japanese_model_path = ".\model\H_excluded.pth"
 japanese_config_path = ".\model\config.json"
 inputVoice = -1
+status = False
 
 #########################################
 #Voice Recognition
@@ -146,8 +149,8 @@ def get_label(text, label):
         return False, text
 
 
-def generateSound(inputString, id, model_id):
-
+def generateSound():
+    global status,model_id,speaker_id
     if model_id == 0:
         model = chinese_model_path
         config = chinese_config_path
@@ -173,11 +176,9 @@ def generateSound(inputString, id, model_id):
 
     if n_symbols != 0:
         if not emotion_embedding:
-            #while True:
-            if(1 == 1):
-                choice = 't'
-                if choice == 't':
-                    text = inputString
+            while True:
+                if shengcheng!='':
+                    text = shengcheng
                     if text == '[ADVANCED]':
                         text = "我不会说"
 
@@ -190,8 +191,7 @@ def generateSound(inputString, id, model_id):
                     cleaned, text = get_label(text, 'CLEANED')
 
                     stn_tst = get_text(text, hps_ms, cleaned=cleaned)
-                    
-                    speaker_id = id 
+
                     out_path = "output.wav"
 
                     with no_grad():
@@ -202,6 +202,7 @@ def generateSound(inputString, id, model_id):
                                                noise_scale_w=noise_scale_w, length_scale=length_scale)[0][0, 0].data.cpu().float().numpy()
 
                 write(out_path, hps_ms.data.sampling_rate, audio)
+                status = False
                 print('Successfully saved!')
 
 
@@ -245,8 +246,10 @@ if __name__ == "__main__":
             print("设置为日语输出")
 
         speaker = int(client.recv(1024).decode())  # outputMethod: CN/JP
-
-
+        model_id =outputMethod
+        speaker_id=speaker
+        generatevoice=threading.Thread(target=generateSound)
+        generatevoice.start()
     while True:
         if(inputMethod == 0): #Keyboard
             total_data = bytes()
@@ -274,8 +277,12 @@ if __name__ == "__main__":
         print(answer)
         if(outputMethod == 0):
             answerG = "[ZH]" + answer + "[ZH]"
-        generateSound(answerG,speaker,outputMethod)
-
+        shengcheng=answerG
+        #generateSound(answerG,speaker,outputMethod)
+        while status!=True:
+            time.sleep(0.2)
+            continue
+        shengcheng=''
         # convert wav to ogg
         src = "./output.wav"
         dst = "./ChatWaifuGameL2D/game/audio/test.ogg"

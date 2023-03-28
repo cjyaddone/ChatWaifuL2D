@@ -4,6 +4,7 @@ from librosa.filters import mel as librosa_mel_fn
 
 MAX_WAV_VALUE = 32768.0
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def dynamic_range_compression_torch(x, C=1, clip_val=1e-5):
     """
@@ -11,7 +12,7 @@ def dynamic_range_compression_torch(x, C=1, clip_val=1e-5):
     ------
     C: compression factor
     """
-    return torch.log(torch.clamp(x, min=clip_val) * C)
+    return torch.log(torch.clamp(x, min=clip_val) * C).to(device)
 
 
 def dynamic_range_decompression_torch(x, C=1):
@@ -20,7 +21,7 @@ def dynamic_range_decompression_torch(x, C=1):
     ------
     C: compression factor used to compress
     """
-    return torch.exp(x) / C
+    return torch.exp(x) / C.to(device)
 
 
 def spectral_normalize_torch(magnitudes):
@@ -52,7 +53,7 @@ def spectrogram_torch(y, n_fft, sampling_rate, hop_size, win_size, center=False)
     y = torch.nn.functional.pad(y.unsqueeze(1), (int((n_fft-hop_size)/2), int((n_fft-hop_size)/2)), mode='reflect')
     y = y.squeeze(1)
 
-    spec = torch.stft(y, n_fft, hop_length=hop_size, win_length=win_size, window=hann_window[wnsize_dtype_device],
+    spec = torch.stft(y.to(device), n_fft, hop_length=hop_size, win_length=win_size, window=hann_window[wnsize_dtype_device].to(device),
                       center=center, pad_mode='reflect', normalized=False, onesided=True, return_complex=False)
 
     spec = torch.sqrt(spec.pow(2).sum(-1) + 1e-6)
@@ -66,7 +67,7 @@ def spec_to_mel_torch(spec, n_fft, num_mels, sampling_rate, fmin, fmax):
     if fmax_dtype_device not in mel_basis:
         mel = librosa_mel_fn(sampling_rate, n_fft, num_mels, fmin, fmax)
         mel_basis[fmax_dtype_device] = torch.from_numpy(mel).to(dtype=spec.dtype, device=spec.device)
-    spec = torch.matmul(mel_basis[fmax_dtype_device], spec)
+    spec = torch.matmul(mel_basis[fmax_dtype_device], spec.to(device))
     spec = spectral_normalize_torch(spec)
     return spec
 
@@ -90,12 +91,12 @@ def mel_spectrogram_torch(y, n_fft, num_mels, sampling_rate, hop_size, win_size,
     y = torch.nn.functional.pad(y.unsqueeze(1), (int((n_fft-hop_size)/2), int((n_fft-hop_size)/2)), mode='reflect')
     y = y.squeeze(1)
 
-    spec = torch.stft(y, n_fft, hop_length=hop_size, win_length=win_size, window=hann_window[wnsize_dtype_device],
+    spec = torch.stft(y.to(device), n_fft, hop_length=hop_size, win_length=win_size, window=hann_window[wnsize_dtype_device].to(device),
                       center=center, pad_mode='reflect', normalized=False, onesided=True)
 
     spec = torch.sqrt(spec.pow(2).sum(-1) + 1e-6)
 
-    spec = torch.matmul(mel_basis[fmax_dtype_device], spec)
+    spec = torch.matmul(mel_basis[fmax_dtype_device], spec.to(device))
     spec = spectral_normalize_torch(spec)
 
     return spec
