@@ -4,7 +4,7 @@ numpy
 scipy
 torch
 unidecode
-openjtalk>=0.3.0.dev2
+pyopenjtalk
 jamo
 pypinyin
 jieba
@@ -16,7 +16,7 @@ ko_pron
 indic_transliteration
 num_thai
 opencc
-pyChatGPT
+openai
 vosk
 sounddevice
 pydub
