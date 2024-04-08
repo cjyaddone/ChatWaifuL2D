@@ -22,6 +22,9 @@ init python:
 # 游戏在此开始。
 
 label start:
+    # 默认自动
+    $ renpy.auto_forward(True)
+    # 不可反悔
     $ renpy.block_rollback()
     # 显示一个背景。此处默认显示占位图，但您也可以在图片目录添加一个文件
     # （命名为 bg room.png 或 bg room.jpg）来显示。
@@ -38,7 +41,7 @@ label start:
 
 
     python:
-        token = renpy.input("让我们开始吧，请输入ChatGPT的Token")
+        token = renpy.input("让我们开始吧，请输入OpenAI的API Key")
         client.send(token.encode())
     
 
@@ -48,7 +51,7 @@ label start:
 
 label checkToken:
     $ renpy.block_rollback()
-    e "Token已发送，正在等待浏览器加载..."
+    e "API Key已发送，正在等待浏览器加载..."
     if (thinking == 0):
         show hiyori m03
 
@@ -61,11 +64,11 @@ label checkToken:
                 client.setblocking(1)
     
     if(len(data) > 0):
-        e "Token已经收到，我们进入下一步吧"
+        e "API Key已经收到，我们进入下一步吧"
         $ thinking = 0
         jump inputMethod
     else:
-        e "Token已发送，正在等待浏览器加载......"
+        e "API Key已发送，正在等待浏览器加载......"
         $ thinking == 1
         jump checkToken
 

@@ -13,6 +13,7 @@ import queue
 import sounddevice as sd
 from vosk import Model, KaldiRecognizer
 import json
+from openai import OpenAI
 
 chinese_model_path = ".\model\CN\model.pth"
 chinese_config_path = ".\model\CN\config.json"
@@ -103,13 +104,9 @@ def voice_input(language):
 ######Socket######
 import socket
 ip_port = ('127.0.0.1', 9000)
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM )
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(ip_port)
 s.listen(5)
-
-
-#### CHATGPT INITIALIZE ####
-from pyChatGPT import ChatGPT
 
 
 ### TTS ###
@@ -202,8 +199,21 @@ def generateSound(inputString, id, model_id):
                                                noise_scale_w=noise_scale_w, length_scale=length_scale)[0][0, 0].data.cpu().float().numpy()
 
                 write(out_path, hps_ms.data.sampling_rate, audio)
-                print('Successfully saved!')
+                # print('Successfully saved!')
 
+def get_reponse(input):
+    msg = [
+        {"role": "user", "content": input}
+    ]
+
+    # Call the OpenAI API with the prompt
+    response = openai_client.chat.completions.create(
+      model="gpt-3.5-turbo",  # Adjust based on available engine versions
+      messages=msg,
+      temperature=0
+    )
+    # Extract and return the text from the API response
+    return response.choices[0].message.content
 
 if __name__ == "__main__":
     print("链接已生成，等待UI连接")
@@ -216,11 +226,11 @@ if __name__ == "__main__":
         total_data += data
         if len(data) < 1024:
             break
-    session_token = total_data.decode()
+    api_key = total_data.decode()
 
-    if(session_token):
-        print("收到token:"+ session_token)
-        api = ChatGPT(session_token)
+    if(api_key):
+        print("收到API-key:"+ api_key)
+        openai_client = OpenAI(api_key=api_key)
         client.send("已加载".encode())
         inputMethod = int(client.recv(1024).decode()) #inputMethod: Keyboard/Voice
         if(inputMethod == 0): #Keyboard
@@ -256,7 +266,6 @@ if __name__ == "__main__":
                 if len(data) < 1024:
                     break
             question = total_data.decode()
-
         elif(inputMethod == 1): #Voice
             question = voice_input(voiceModel)
             client.send(question.encode())
@@ -267,8 +276,8 @@ if __name__ == "__main__":
             question = question + " 使用日本语回答"
         if (outputMethod == 0 and (inputVoice == 1 or inputVoice == 2 or inputVoice == -1)):
             question = question + " 使用中文回答"
-        resp = api.send_message(question)
-        answer = resp["message"].replace('\n', '')
+        resp = get_reponse(question)
+        answer = resp.replace('\n', '')
         answerG = answer
         print("ChatGPT:")
         print(answer)
